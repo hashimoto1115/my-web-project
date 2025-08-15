@@ -1,9 +1,12 @@
 #!/bin/bash
 set -e
 
-# Apache インストール
+# パッケージ更新
+yum update -y
+
+# Apache (httpd) インストール
 yum install -y httpd
 
-# Apache 自動起動
-systemctl enable httpd
+# Apache 起動 & 自動起動設定
 systemctl start httpd
+systemctl enable httpd
