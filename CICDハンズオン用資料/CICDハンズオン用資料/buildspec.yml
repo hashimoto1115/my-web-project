@@ -1,12 +1,22 @@
 version: 0.2
 
 phases:
+  install:
+    commands:
+      - echo "=== Install phase start ==="
+      - echo "No special dependencies to install."
+  pre_build:
+    commands:
+      - echo "=== Pre-build phase start ==="
   build:
     commands:
-      - aws deploy push --application-name my-web-app \
-        --s3-location s3://my-company-deploy-artifacts-2025/artifact.zip \
-        --source CICDハンズオン用資料/CICDハンズオン用資料/src
+      - echo "=== Build phase start ==="
+      # S3にアーティファクトをアップロード
+      - aws deploy push --application-name my-web-app --s3-location s3://my-company-deploy-artifacts-2025/artifact-$CODEBUILD_BUILD_NUMBER.zip --source "CICDハンズオン用資料/CICDハンズオン用資料/src"
+  post_build:
+    commands:
+      - echo "=== Post-build phase complete ==="
+
 artifacts:
   files:
     - '**/*'
-  base-directory: CICDハンズオン用資料/CICDハンズオン用資料/src
